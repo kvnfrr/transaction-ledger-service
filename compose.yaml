@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: ledger
+      POSTGRES_USER: ledger_user
+      POSTGRES_PASSWORD: ledger_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - ledger_data:/var/lib/postgresql
+
+volumes:
+  ledger_data:

@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: transaction-ledger-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ledger
+    username: ledger_user
+    password: ledger_password
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
