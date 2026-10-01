@@ -1,4 +1,4 @@
-package com.kevinferrer.ledger.accounts;
+package com.kevinferrer.ledger.account;
 
 import jakarta.persistence.*;
 
@@ -26,6 +26,26 @@ public class Account {
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
 
     protected Account() {
     }
