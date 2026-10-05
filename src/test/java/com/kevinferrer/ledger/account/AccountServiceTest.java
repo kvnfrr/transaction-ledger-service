@@ -7,6 +7,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -114,5 +116,39 @@ class AccountServiceTest {
                 );
 
         verifyNoInteractions(accountRepository);
+    }
+
+    @Test
+    void returnsAccountWhenAccountExists() {
+        UUID accountId = UUID.randomUUID();
+
+        Account account = new Account(
+                "Corvo Attano",
+                "USD",
+                new BigDecimal("1000.00")
+        );
+
+        when(accountRepository.findById(accountId))
+                .thenReturn(Optional.of(account));
+
+        Account result = accountService.getAccount(accountId);
+
+        assertThat(result).isSameAs(account);
+
+        verify(accountRepository).findById(accountId);
+    }
+
+    @Test
+    void throwsWhenAccountDoesNotExist() {
+        UUID accountId = UUID.randomUUID();
+
+        when(accountRepository.findById(accountId))
+                .thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> accountService.getAccount(accountId))
+                .isInstanceOf(AccountNotFoundException.class)
+                .hasMessage("Account not found: " + accountId);
+
+        verify(accountRepository).findById(accountId);
     }
 }

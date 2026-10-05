@@ -6,6 +6,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/accounts")
 public class AccountController {
@@ -21,6 +23,10 @@ public class AccountController {
                 request.openingBalance()
         );
 
+        return toResponse(account);
+    }
+
+    private AccountResponse toResponse(Account account) {
         return new AccountResponse(
                 account.getId(),
                 account.getOwnerName(),
@@ -28,6 +34,13 @@ public class AccountController {
                 account.getBalance(),
                 account.getCreatedAt()
         );
+    }
+
+    @GetMapping("/{id}")
+    public AccountResponse getAccount(@PathVariable UUID id) {
+        Account account = accountService.getAccount(id);
+
+        return toResponse(account);
     }
 
     private final AccountService accountService;

@@ -3,6 +3,7 @@ package com.kevinferrer.ledger.account;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Service
 public class AccountService {
@@ -41,5 +42,10 @@ public class AccountService {
                 new Account(ownerName, currency, openingBalance);
 
         return accountRepository.save(account);
+    }
+
+    public Account getAccount(UUID id) {
+        return accountRepository.findById(id)
+                .orElseThrow(() -> new AccountNotFoundException(id));
     }
 }
