@@ -117,7 +117,7 @@ class AccountControllerTest {
                 .andExpect(jsonPath("$.id")
                         .value(accountId.toString()))
                 .andExpect(jsonPath("$.ownerName")
-                        .value("Kevin Ferrer"))
+                        .value("Corvo Attano"))
                 .andExpect(jsonPath("$.currency")
                         .value("USD"))
                 .andExpect(jsonPath("$.balance")
